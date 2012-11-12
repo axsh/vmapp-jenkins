@@ -26,13 +26,16 @@ function generate_copyfile() {
 }
 
 function build_vm() {
-  local target=${1:-vmapp-ashiba} arch=${2:-$(arch)}
+  local target=${1:-vmapp-jenkins} arch=${2:-$(arch)}
 
   echo "[INFO] Building vmimage"
 
   ${vmbuilder_sh_path} \
    --distro-arch=${arch} \
            --raw=${target}.$(date +%Y%m%d).01.${arch}.raw \
+      --rootsize=$((1024 * 20)) \
+            --gw=192.168.2.1  \
+            --ip=192.168.2.19 \
           --copy=${manifest_dir}/copy.txt \
     --execscript=${manifest_dir}/execscript.sh
 }
@@ -56,5 +59,5 @@ readonly vmbuilder_sh_path=${vmbuilder_dirpath}/vmbuilder.sh
 
 for arch in x86_64; do
   generate_copyfile
-  build_vm vmapp-ashiba ${arch}
+  build_vm vmapp-jenkins ${arch}
 done

@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# requires:
+#  bash
+#  yum
+#
+set -e
+
+yum install -y ntp
+chkconfig ntpd on

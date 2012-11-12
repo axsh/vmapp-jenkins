@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# requires:
+#  bash
+#  yum
+#
+set -e
+
+## Building Wakame-VDC RPMs
+
+yum install -y make createrepo
