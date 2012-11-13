@@ -10,7 +10,7 @@ set -e
 
 function list_fakeroot_tree() {
   cd ${fakeroot_dir}
-  find . -type f | sed s,^\.,,
+  find . -type f | sed s,^\.,, | egrep -v ^/.gitkeep
 }
 
 function generate_copyfile() {
@@ -25,22 +25,24 @@ function generate_copyfile() {
   cat ${manifest_dir}/copy.txt
 }
 
+function vmbuilder_path() {
+  # should be added vmbuilder installation path to $PATH environment
+  which vmbuilder.sh
+}
+
 function build_vm() {
-  local target=${1:-vmapp-jenkins} arch=${2:-$(arch)}
+  local target=${1:-vmapp-ashiba} arch=${2:-$(arch)}
 
   echo "[INFO] Building vmimage"
 
-  ${vmbuilder_sh_path} \
+  $(vmbuilder_path) \
    --distro-arch=${arch} \
            --raw=${target}.$(date +%Y%m%d).01.${arch}.raw \
-      --rootsize=$((1024 * 20)) \
-            --gw=192.168.2.1  \
-            --ip=192.168.2.19 \
           --copy=${manifest_dir}/copy.txt \
     --execscript=${manifest_dir}/execscript.sh
 }
 
-## main
+## variables
 
 ### environment variables
 
@@ -54,10 +56,14 @@ readonly abs_dirname=$(cd $(dirname $0) && pwd)
 readonly manifest_dir=${abs_dirname}
 readonly fakeroot_dir=${manifest_dir}/fakeroot
 
-readonly vmbuilder_dirpath=${abs_dirname}/..
-readonly vmbuilder_sh_path=${vmbuilder_dirpath}/vmbuilder.sh
+###
 
-for arch in x86_64; do
-  generate_copyfile
-  build_vm vmapp-jenkins ${arch}
-done
+declare vmapp_name=${1:-vmapp-ashiba}
+
+## main
+
+# enable to set PATH at config.env
+[[ -f ${abs_dirname}/config.env ]] && . ${abs_dirname}/config.env || :
+
+generate_copyfile
+build_vm ${vmapp_name}
