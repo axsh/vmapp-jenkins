@@ -10,3 +10,6 @@ set -e
 yum install -y java-1.6.0-openjdk
 yum install -y jenkins
 sed -i "s,^JENKINS_USER=.*,JENKINS_USER=root," /etc/sysconfig/jenkins
+
+# install git plugin
+curl -L -o /var/lib/jenkins/plugins/git.hpi http://updates.jenkins-ci.org/download/plugins/git/1.1.26/git.hpi

@@ -1,0 +1,5 @@
+name=vmapp-jenkins
+vnc_port=1031
+monitor_port=4474
+serial_port=5585
+vnc_keymap=ja

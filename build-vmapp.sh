@@ -35,11 +35,33 @@ function build_vm() {
 
   echo "[INFO] Building vmimage"
 
+  local version=1
+  local raw=${target}.$(date +%Y%m%d).$(printf "%02d" ${version}).${arch}.raw
+  [[ -f ${raw} ]] && {
+    version=$((${version} + 1))
+    raw=${target}.$(date +%Y%m%d).$(printf "%02d" ${version}).${arch}.raw
+  }
+
   $(vmbuilder_path) \
    --distro-arch=${arch} \
-           --raw=${raw:-${target}.$(date +%Y%m%d).01.${arch}.raw} \
+           --raw=${raw} \
           --copy=${manifest_dir}/copy.txt \
-    --execscript=${manifest_dir}/execscript.sh
+    --execscript=${manifest_dir}/execscript.sh \
+    --nictab=${abs_dirname}/nictab
+
+  echo "[INFO] Modify symlink"
+  echo "ln -sf ${abs_dirname}/${raw} ${abs_dirname}/${target}.raw"
+  ln -sf ${abs_dirname}/${raw} ${abs_dirname}/${target}.raw 
+
+  local num=$(ls ${abs_dirname}/${target}.*.raw | wc -l) 
+  local limit=3
+  [[ ${num} -le ${limit} ]] || {
+    echo "[INFO] Deleting old vmimages"
+    ls -t ${abs_dirname}/${target}.*.raw | tail -$((${num} - ${limit})) | while read file; do
+      echo "rm ${file}"
+      rm ${file}
+    done
+  }
 }
 
 ## variables
