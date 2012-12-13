@@ -3,6 +3,6 @@
 copy.txt
 jenkins.conf
 nictab
-vmapp-jenkins.*.raw
-vmapp-jenkins.raw
+jenkins.*.raw
+jenkins.raw
 centos-*
