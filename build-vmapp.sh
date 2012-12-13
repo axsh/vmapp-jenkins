@@ -43,6 +43,8 @@ function build_vm() {
   }
 
   $(vmbuilder_path) \
+   --hostname=${target:-jenkins} \
+   --rootsize=${rootsize:-4096} \
    --distro-arch=${arch} \
            --raw=${raw} \
           --copy=${manifest_dir}/copy.txt \
@@ -88,4 +90,4 @@ declare vmapp_name=${1:-vmapp-ashiba}
 [[ -f ${abs_dirname}/config.env ]] && . ${abs_dirname}/config.env || :
 
 generate_copyfile
-build_vm ${vmapp_name}
+build_vm ${name}
