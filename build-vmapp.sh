@@ -64,6 +64,8 @@ function build_vm() {
       rm ${file}
     done
   }
+
+  [[ -f ~/.ssh/known_hosts ]] && [[ -n "${ipaddr}" ]] && ssh-keygen -R ${ipaddr}
 }
 
 ## variables
