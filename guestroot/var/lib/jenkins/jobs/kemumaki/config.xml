@@ -9,7 +9,7 @@
         <hudson.model.StringParameterDefinition>
           <name>KEMUMAKI_CONFIG_DIR</name>
           <description></description>
-          <defaultValue>/opt/kemumaki</defaultValue>
+          <defaultValue>/etc/kemumaki</defaultValue>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
