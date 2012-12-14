@@ -1,8 +1,8 @@
-*.swp
-*.swo
 copy.txt
 jenkins.conf
 nictab
 jenkins.*.raw
 jenkins.raw
 centos-*
+config.env.local
+config.env.vmapp
