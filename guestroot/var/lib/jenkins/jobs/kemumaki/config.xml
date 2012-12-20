@@ -3,7 +3,27 @@
   <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
-  <properties/>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.TextParameterDefinition>
+          <name>KEMUMAKI_VDC_CHECKOUT_TARGET</name>
+          <description>checkout target(branch name or commit id) for wakame-vdc</description>
+          <defaultValue>master</defaultValue>
+        </hudson.model.TextParameterDefinition>
+        <hudson.model.TextParameterDefinition>
+          <name>KEMUMAKI_RPMBUILD_TMP_DIR</name>
+          <description>rpmbuild working directory</description>
+          <defaultValue>${WORKSPACE}/tmp/rpmbuild</defaultValue>
+        </hudson.model.TextParameterDefinition>
+        <hudson.model.TextParameterDefinition>
+          <name>KEMUMAKI_CONFIG_DIR</name>
+          <description>config directory</description>
+          <defaultValue>${WORKSPACE}/config</defaultValue>
+        </hudson.model.TextParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
   <scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.2">
     <scms>
       <hudson.plugins.git.GitSCM plugin="git@1.1.26">
