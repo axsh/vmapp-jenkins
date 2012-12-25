@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+mkdir -p /opt/axsh
+cd /opt/axsh
+git clone git://github.com/axsh/kemumaki.git
+git submodule update --init

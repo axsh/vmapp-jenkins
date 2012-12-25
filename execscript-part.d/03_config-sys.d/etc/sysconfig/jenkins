@@ -13,4 +13,3 @@ sed -i "s,^JENKINS_USER=.*,JENKINS_USER=root," /etc/sysconfig/jenkins
 
 # install git plugin
 curl -L -o /var/lib/jenkins/plugins/git.hpi http://updates.jenkins-ci.org/latest/git.hpi
-curl -L -o /var/lib/jenkins/plugins/multiple-scms.hpi http://updates.jenkins-ci.org/latest/multiple-scms.hpi

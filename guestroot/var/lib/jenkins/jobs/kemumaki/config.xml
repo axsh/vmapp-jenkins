@@ -6,101 +6,85 @@
   <properties>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
-        <hudson.model.TextParameterDefinition>
-          <name>KEMUMAKI_VDC_CHECKOUT_TARGET</name>
+        <hudson.model.StringParameterDefinition>
+          <name>GIT_COMMIT</name>
           <description>checkout target(branch name or commit id) for wakame-vdc</description>
-          <defaultValue>master</defaultValue>
-        </hudson.model.TextParameterDefinition>
-        <hudson.model.TextParameterDefinition>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>HIPCHAT_NOTIFICATION</name>
+          <description></description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>HIPCHAT_TOKEN</name>
+          <description></description>
+          <defaultValue>e0d73c2c95311dccfe211f610b08f9</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>HIPCHAT_ROOM_ID</name>
+          <description></description>
+          <defaultValue>100801</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>HIPCHAT_FROM_NAME</name>
+          <description></description>
+          <defaultValue>kemumaki</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>KEMUMAKI_DIR</name>
+          <description>kemumaki directory</description>
+          <defaultValue>/opt/axsh/kemumaki</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
           <name>KEMUMAKI_RPMBUILD_TMP_DIR</name>
           <description>rpmbuild working directory</description>
-          <defaultValue>${WORKSPACE}/tmp/rpmbuild</defaultValue>
-        </hudson.model.TextParameterDefinition>
-        <hudson.model.TextParameterDefinition>
+          <defaultValue>${KEMUMAKI_DIR}/tmp/rpmbuild</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
           <name>KEMUMAKI_CONFIG_DIR</name>
           <description>config directory</description>
-          <defaultValue>${WORKSPACE}/config</defaultValue>
-        </hudson.model.TextParameterDefinition>
+          <defaultValue>${KEMUMAKI_DIR}/config</defaultValue>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
-  <scm class="org.jenkinsci.plugins.multiplescms.MultiSCM" plugin="multiple-scms@0.2">
-    <scms>
-      <hudson.plugins.git.GitSCM plugin="git@1.1.26">
-        <configVersion>2</configVersion>
-        <userRemoteConfigs>
-          <hudson.plugins.git.UserRemoteConfig>
-            <name></name>
-            <refspec></refspec>
-            <url>git://github.com/axsh/kemumaki.git</url>
-          </hudson.plugins.git.UserRemoteConfig>
-        </userRemoteConfigs>
-        <branches>
-          <hudson.plugins.git.BranchSpec>
-            <name>master</name>
-          </hudson.plugins.git.BranchSpec>
-        </branches>
-        <disableSubmodules>false</disableSubmodules>
-        <recursiveSubmodules>false</recursiveSubmodules>
-        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-        <authorOrCommitter>false</authorOrCommitter>
-        <clean>false</clean>
-        <wipeOutWorkspace>false</wipeOutWorkspace>
-        <pruneBranches>false</pruneBranches>
-        <remotePoll>false</remotePoll>
-        <ignoreNotifyCommit>false</ignoreNotifyCommit>
-        <useShallowClone>false</useShallowClone>
-        <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
-        <gitTool>Default</gitTool>
-        <submoduleCfg class="list"/>
-        <relativeTargetDir></relativeTargetDir>
-        <reference></reference>
-        <excludedRegions></excludedRegions>
-        <excludedUsers></excludedUsers>
-        <gitConfigName></gitConfigName>
-        <gitConfigEmail></gitConfigEmail>
-        <skipTag>false</skipTag>
-        <includedRegions></includedRegions>
-        <scmName></scmName>
-      </hudson.plugins.git.GitSCM>
-      <hudson.plugins.git.GitSCM plugin="git@1.1.26">
-        <configVersion>2</configVersion>
-        <userRemoteConfigs>
-          <hudson.plugins.git.UserRemoteConfig>
-            <name></name>
-            <refspec></refspec>
-            <url>git://github.com/axsh/wakame-vdc.git</url>
-          </hudson.plugins.git.UserRemoteConfig>
-        </userRemoteConfigs>
-        <branches>
-          <hudson.plugins.git.BranchSpec>
-            <name>master</name>
-          </hudson.plugins.git.BranchSpec>
-        </branches>
-        <disableSubmodules>false</disableSubmodules>
-        <recursiveSubmodules>false</recursiveSubmodules>
-        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-        <authorOrCommitter>false</authorOrCommitter>
-        <clean>false</clean>
-        <wipeOutWorkspace>false</wipeOutWorkspace>
-        <pruneBranches>false</pruneBranches>
-        <remotePoll>false</remotePoll>
-        <ignoreNotifyCommit>false</ignoreNotifyCommit>
-        <useShallowClone>false</useShallowClone>
-        <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
-        <gitTool>Default</gitTool>
-        <submoduleCfg class="list"/>
-        <relativeTargetDir>wakame-vdc</relativeTargetDir>
-        <reference></reference>
-        <excludedRegions></excludedRegions>
-        <excludedUsers></excludedUsers>
-        <gitConfigName></gitConfigName>
-        <gitConfigEmail></gitConfigEmail>
-        <skipTag>false</skipTag>
-        <includedRegions></includedRegions>
-        <scmName></scmName>
-      </hudson.plugins.git.GitSCM>
-    </scms>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@1.1.26">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name></name>
+        <refspec></refspec>
+        <url>git://github.com/axsh/wakame-vdc.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>**</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <disableSubmodules>false</disableSubmodules>
+    <recursiveSubmodules>false</recursiveSubmodules>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <authorOrCommitter>false</authorOrCommitter>
+    <clean>false</clean>
+    <wipeOutWorkspace>false</wipeOutWorkspace>
+    <pruneBranches>false</pruneBranches>
+    <remotePoll>false</remotePoll>
+    <ignoreNotifyCommit>false</ignoreNotifyCommit>
+    <useShallowClone>false</useShallowClone>
+    <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+    <gitTool>Default</gitTool>
+    <submoduleCfg class="list"/>
+    <relativeTargetDir></relativeTargetDir>
+    <reference></reference>
+    <excludedRegions></excludedRegions>
+    <excludedUsers></excludedUsers>
+    <gitConfigName></gitConfigName>
+    <gitConfigEmail></gitConfigEmail>
+    <skipTag>false</skipTag>
+    <includedRegions></includedRegions>
+    <scmName></scmName>
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
@@ -110,7 +94,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>bin/kemumaki rpmbuild</command>
+      <command>${KEMUMAKI_DIR}/bin/kemumaki rpmbuild</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>
