@@ -7,6 +7,7 @@
 #  vmbuilder.sh => git://github.com/hansode/vmbuilder.git
 #
 set -e
+set -x
 
 function list_guestroot_tree() {
   cd ${guestroot_dir}
@@ -31,11 +32,20 @@ function vmbuilder_path() {
 }
 
 function build_vm() {
-  local target=${1:-vmapp-ashiba} arch=${2:-$(arch)}
+  [[ $# -eq 1 ]] || { echo "wrong number of arguments $# for 1" >&2; return 1; }
+  local target=${1}
+  local config_path=${abs_dirname}/${target}.conf
+  [[ -f ${config_path} ]] || { echo "config file not found: ${config_path}" >&2; return 1; }
+  local nictab=${abs_dirname}/${target}.nictab
+
+  . ${config_path}
+  cp ${abs_dirname}/misc/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration-${target}.xml ${guestroot_dir}/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
+  cp ${abs_dirname}/misc/var/lib/jenkins/jobs/kemumaki/config-${target}.xml ${guestroot_dir}/var/lib/jenkins/jobs/kemumaki/config.xml
 
   echo "[INFO] Building vmimage"
 
   local version=1
+  local arch=$(arch)
   local raw=${target}.$(date +%Y%m%d).$(printf "%02d" ${version}).${arch}.raw
   [[ -f ${raw} ]] && {
     version=$((${version} + 1))
@@ -43,13 +53,12 @@ function build_vm() {
   }
 
   $(vmbuilder_path) \
-   --hostname=${target:-jenkins} \
-   --rootsize=${rootsize:-4096} \
    --distro-arch=${arch} \
            --raw=${raw} \
           --copy=${manifest_dir}/copy.txt \
     --execscript=${manifest_dir}/execscript.sh \
-    --nictab=${abs_dirname}/nictab
+    --nictab=${nictab} \
+    --config-path=${config_path}
 
   echo "[INFO] Modify symlink"
   echo "ln -sf ${abs_dirname}/${raw} ${abs_dirname}/${target}.raw"
@@ -84,7 +93,7 @@ readonly guestroot_dir=${manifest_dir}/guestroot
 
 ###
 
-declare vmapp_name=${1:-vmapp-ashiba}
+#declare vmapp_name=${1:-vmapp-ashiba}
 
 ## main
 
@@ -92,4 +101,4 @@ declare vmapp_name=${1:-vmapp-ashiba}
 [[ -f ${abs_dirname}/config.env ]] && . ${abs_dirname}/config.env || :
 
 generate_copyfile
-build_vm ${name}
+build_vm ${1:-shinjuku}
