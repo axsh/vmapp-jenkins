@@ -39,8 +39,21 @@ function build_vm() {
   local nictab=${abs_dirname}/${target}.nictab
 
   . ${config_path}
-  cp ${abs_dirname}/misc/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration-${target}.xml ${guestroot_dir}/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
-  cp ${abs_dirname}/misc/var/lib/jenkins/jobs/kemumaki/config-${target}.xml ${guestroot_dir}/var/lib/jenkins/jobs/kemumaki/config.xml
+
+  local jenkins_location_config_file=jenkins.model.JenkinsLocationConfiguration.xml
+  if [[ -f ${abs_dirname}/misc/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration-${target}.xml ]]; then
+    jenkins_location_config_file=jenkins.model.JenkinsLocationConfiguration-${target}.xml
+  fi
+  cp ${abs_dirname}/misc/var/lib/jenkins/${jenkins_location_config_file} ${guestroot_dir}/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
+
+  mkdir -p ${guestroot_dir}/var/lib/jenkins/jobs/wakame-vdc-${target}
+  local jenkins_job_config_file=config.xml
+  if [[ -f ${abs_dirname}/misc/var/lib/jenkins/jobs/wakame-vdc/config-${target}.xml ]]; then
+    jenkins_job_config_file=config-${target}.xml
+  fi
+  cp ${abs_dirname}/misc/var/lib/jenkins/jobs/wakame-vdc/${jenkins_job_config_file} ${guestroot_dir}/var/lib/jenkins/jobs/wakame-vdc-${target}/config.xml
+
+  generate_copyfile
 
   echo "[INFO] Building vmimage"
 
@@ -100,5 +113,4 @@ readonly guestroot_dir=${manifest_dir}/guestroot
 # enable to set PATH at config.env
 [[ -f ${abs_dirname}/config.env ]] && . ${abs_dirname}/config.env || :
 
-generate_copyfile
 build_vm ${1:-shinjuku}
