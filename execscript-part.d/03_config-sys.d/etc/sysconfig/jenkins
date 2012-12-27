@@ -13,3 +13,8 @@ sed -i "s,^JENKINS_USER=.*,JENKINS_USER=root," /etc/sysconfig/jenkins
 
 # install git plugin
 curl -L -o /var/lib/jenkins/plugins/git.hpi http://updates.jenkins-ci.org/latest/git.hpi
+
+cd  /var/lib/jenkins/jobs
+git init
+git add .
+git commit -m 'kemukins: config keeper.'
