@@ -9,3 +9,6 @@ guestroot/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 guestroot/var/lib/jenkins/jobs/wakame-vdc-*/config.xml
 misc/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration-*.xml
 misc/var/lib/jenkins/jobs/wakame-vdc/config-*.xml
+guestroot.shinjuku/etc/httpd/htpasswd
+
+tmp/*

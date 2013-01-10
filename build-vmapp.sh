@@ -40,6 +40,9 @@ function build_vm() {
 
   . ${config_path}
 
+  [[ -d ${guestroot_dir} ]] && rm -rf ${guestroot_dir} || :
+  cp -a ${abs_dirname}/guestroot ${tmp_dir}
+
   local jenkins_location_config_file=jenkins.model.JenkinsLocationConfiguration.xml
   if [[ -f ${abs_dirname}/misc/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration-${target}.xml ]]; then
     jenkins_location_config_file=jenkins.model.JenkinsLocationConfiguration-${target}.xml
@@ -52,6 +55,10 @@ function build_vm() {
     jenkins_job_config_file=config-${target}.xml
   fi
   cp ${abs_dirname}/misc/var/lib/jenkins/jobs/wakame-vdc/${jenkins_job_config_file} ${guestroot_dir}/var/lib/jenkins/jobs/wakame-vdc-${target}/config.xml
+
+  [[ -d ${abs_dirname}/guestroot.${target} ]] && {
+    cp -a ${abs_dirname}/guestroot.${target} -T ${guestroot_dir}
+  }
 
   generate_copyfile
 
@@ -102,7 +109,10 @@ export LANG=C
 readonly abs_dirname=$(cd $(dirname $0) && pwd)
 
 readonly manifest_dir=${abs_dirname}
-readonly guestroot_dir=${manifest_dir}/guestroot
+readonly tmp_dir=${abs_dirname}/tmp
+readonly guestroot_dir=${tmp_dir}/guestroot
+
+mkdir -p ${tmp_dir}
 
 ###
 
