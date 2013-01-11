@@ -37,6 +37,7 @@ function build_vm() {
   local config_path=${abs_dirname}/${target}.conf
   [[ -f ${config_path} ]] || { echo "config file not found: ${config_path}" >&2; return 1; }
   local nictab=${abs_dirname}/${target}.nictab
+  local routetab=${abs_dirname}/${target}.routetab
 
   . ${config_path}
 
@@ -52,10 +53,10 @@ function build_vm() {
 
   local version=1
   local arch=$(arch)
-  local raw=${target}.$(date +%Y%m%d).$(printf "%02d" ${version}).${arch}.raw
+  local raw=${name}.$(date +%Y%m%d).$(printf "%02d" ${version}).${arch}.raw
   [[ -f ${raw} ]] && {
     version=$((${version} + 1))
-    raw=${target}.$(date +%Y%m%d).$(printf "%02d" ${version}).${arch}.raw
+    raw=${name}.$(date +%Y%m%d).$(printf "%02d" ${version}).${arch}.raw
   }
 
   $(vmbuilder_path) \
@@ -64,11 +65,12 @@ function build_vm() {
           --copy=${manifest_dir}/copy.txt \
     --execscript=${manifest_dir}/execscript.sh \
     --nictab=${nictab} \
+    --routetab=${routetab} \
     --config-path=${config_path}
 
   echo "[INFO] Modify symlink"
-  echo "ln -sf ${abs_dirname}/${raw} ${abs_dirname}/${target}.raw"
-  ln -sf ${abs_dirname}/${raw} ${abs_dirname}/${target}.raw 
+  echo "ln -sf ${abs_dirname}/${raw} ${abs_dirname}/${name}.raw"
+  ln -sf ${abs_dirname}/${raw} ${abs_dirname}/${name}.raw 
 
   local num=$(ls ${abs_dirname}/${target}.*.raw | wc -l) 
   local limit=3
