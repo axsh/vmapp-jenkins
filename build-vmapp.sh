@@ -42,20 +42,6 @@ function build_vm() {
 
   [[ -d ${guestroot_dir} ]] && rm -rf ${guestroot_dir} || :
   cp -a ${abs_dirname}/guestroot ${tmp_dir}
-
-  local jenkins_location_config_file=jenkins.model.JenkinsLocationConfiguration.xml
-  if [[ -f ${abs_dirname}/misc/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration-${target}.xml ]]; then
-    jenkins_location_config_file=jenkins.model.JenkinsLocationConfiguration-${target}.xml
-  fi
-  cp ${abs_dirname}/misc/var/lib/jenkins/${jenkins_location_config_file} ${guestroot_dir}/var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
-
-  mkdir -p ${guestroot_dir}/var/lib/jenkins/jobs/wakame-vdc-${target}
-  local jenkins_job_config_file=config.xml
-  if [[ -f ${abs_dirname}/misc/var/lib/jenkins/jobs/wakame-vdc/config-${target}.xml ]]; then
-    jenkins_job_config_file=config-${target}.xml
-  fi
-  cp ${abs_dirname}/misc/var/lib/jenkins/jobs/wakame-vdc/${jenkins_job_config_file} ${guestroot_dir}/var/lib/jenkins/jobs/wakame-vdc-${target}/config.xml
-
   [[ -d ${abs_dirname}/guestroot.${target} ]] && {
     cp -a ${abs_dirname}/guestroot.${target} -T ${guestroot_dir}
   }
