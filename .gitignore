@@ -5,6 +5,5 @@ jenkins.raw
 centos-*
 config.env.local
 config.env.vmapp
-guestroot.shinjuku
-guestroot.mita
+#guestroot.*/*
 tmp/*
