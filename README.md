@@ -23,3 +23,21 @@ Building virtual machine image with ashiba
 ------------------------------------------
 
     $ sudo ./build-vmapp.sh
+
+kemumaki-specific image
+=======================
+
+Building virtual machine image
+------------------------------
+
+    $ sudo ./jenkins-ctl kemumkins build
+
+Starting virtual machine image
+------------------------------
+
+    $ sudo ./jenkins-ctl kemumkins start
+
+Stopping virtual machine image
+------------------------------
+
+    $ sudo ./jenkins-ctl kemumkins stop
