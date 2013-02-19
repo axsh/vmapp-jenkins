@@ -12,7 +12,16 @@ yum install -y jenkins
 sed -i "s,^JENKINS_USER=.*,JENKINS_USER=root," /etc/sysconfig/jenkins
 
 # install git plugin
-curl -L -o /var/lib/jenkins/plugins/git.hpi http://updates.jenkins-ci.org/latest/git.hpi
+base_url="http://updates.jenkins-ci.org/latest"
+while read plugin; do
+  curl -fsSkL -o /var/lib/jenkins/plugins/${plugin} ${base_url}/${plugin}
+done < <(cat <<-EOS
+config-autorefresh-plugin.hpi
+git.hpi
+hipchat.hpi
+simple-theme-plugin.hpi
+EOS
+)
 
 cd  /var/lib/jenkins/jobs
 git init
