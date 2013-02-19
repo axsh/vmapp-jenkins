@@ -8,7 +8,3 @@ cd /opt/axsh
 git clone git://github.com/axsh/kemumaki.git
 cd /opt/axsh/kemumaki
 git submodule update --init
-
-git clone git://github.com/axsh/kemumaki.git kemumaki_integration
-cd /opt/axsh/kemumaki_dev
-git submodule update --init
