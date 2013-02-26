@@ -16,13 +16,18 @@ base_url="http://updates.jenkins-ci.org/latest"
 while read plugin; do
   curl -fsSkL -o /var/lib/jenkins/plugins/${plugin} ${base_url}/${plugin}
 done < <(cat <<-EOS
+build-pipeline-plugin.hpi
 config-autorefresh-plugin.hpi
-git.hpi
+git-client.hpi
 hipchat.hpi
+join.hpi
+parameterized-trigger.hpi
 simple-theme-plugin.hpi
 EOS
 )
 
+# git plugin
+curl -fsSkL -o /var/lib/jenkins/plugins/git.hpi http://updates.jenkins-ci.org/download/plugins/git/1.1.26/git.hpi
 cd  /var/lib/jenkins/jobs
 git init
 git add .
