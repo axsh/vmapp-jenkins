@@ -31,10 +31,15 @@ function vmbuilder_path() {
   which vmbuilder.sh
 }
 
+function packages_option() {
+  sed -e 's/[[:space:]]//g' -e 's/^/--addpkg /' ${abs_dirname}/packages
+}
+
 function build_vm() {
   [[ $# -eq 1 ]] || { echo "wrong number of arguments $# for 1" >&2; return 1; }
   local target=${1}
   local config_path=${abs_dirname}/${target}.conf
+
   [[ -f ${config_path} ]] || { echo "config file not found: ${config_path}" >&2; return 1; }
   local nictab=${abs_dirname}/${target}.nictab
   local routetab=${abs_dirname}/${target}.routetab
@@ -66,6 +71,7 @@ function build_vm() {
     --execscript=${manifest_dir}/execscript.sh \
     --nictab=${nictab} \
     --routetab=${routetab} \
+    $(packages_option) \
     --config-path=${config_path}
 
   echo "[INFO] Modify symlink"
