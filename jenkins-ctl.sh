@@ -1,10 +1,13 @@
 #!/bin/bash
 
+base_dir=$(dirname ${BASH_SOURCE[0]})
+env=$1
+
 case $2 in
 build)
-  $(dirname BASH_SOURCE[0])/build-vmapp.sh $1
+  ${base_dir}/build-vmapp.sh $1
   ;;
 start|stop)
-  $(dirname BASH_SOURCE[0])/vmbuilder/kvm/rhel/6/misc/kvm-ctl.sh $2 --config_path=$1.conf --viftab=${1}.viftab
+  ${base_dir}/vmbuilder/kvm/rhel/6/misc/kvm-ctl.sh $2 --config_path=${base_dir}/${env}.conf --viftab=${base_dir}/${env}.viftab
   ;;
 esac
