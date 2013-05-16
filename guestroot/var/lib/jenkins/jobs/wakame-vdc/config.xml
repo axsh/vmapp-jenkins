@@ -7,9 +7,9 @@
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>GIT_COMMIT</name>
+          <name>VDC_BUILD_TARGET</name>
           <description>branch name, tag name, or commit id.</description>
-          <defaultValue></defaultValue>
+          <defaultValue>master</defaultValue>
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>HIPCHAT_NOTIFICATION</name>
@@ -90,7 +90,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>master</name>
+        <name>${VDC_BUILD_TARGET}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <disableSubmodules>false</disableSubmodules>
